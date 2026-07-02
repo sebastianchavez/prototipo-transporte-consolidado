@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Cargas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Icons for icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style data-purpose="custom-utilities">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.3s ease-out;
+    }
+    @media (max-width: 639px) {
+      input, select, textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  </style>
+</head>
+<body class="text-slate-800 h-screen flex flex-col overflow-x-hidden">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-slate-200 px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between" data-purpose="app-header">
+<div class="flex items-center gap-2 sm:gap-3">
+<span class="material-icons text-blue-600 text-lg sm:text-xl">local_shipping</span>
+<h1 class="text-base sm:text-xl font-bold text-slate-900">Transporte Consolidado</h1>
+</div>
+<div class="flex items-center gap-2 sm:gap-3">
+<button class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-green-50 text-green-700 rounded-md border border-green-200 hover:bg-green-100 transition-colors text-xs sm:text-sm font-medium">
+<span class="material-icons text-xs sm:text-sm">table_view</span> <span class="hidden sm:inline">Excel</span>
+      </button>
+<button class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-white text-slate-700 rounded-md border border-slate-300 hover:bg-slate-50 transition-colors text-xs sm:text-sm font-medium">
+<span class="material-icons text-xs sm:text-sm">folder</span> <span class="hidden sm:inline">Local</span>
+      </button>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: NavigationTabs -->
+<nav class="bg-white border-b border-slate-200 px-2 sm:px-6 flex gap-1 sm:gap-6 overflow-x-auto" data-purpose="main-navigation">
+<a href="cargas.html" class="px-3 sm:px-4 py-3 sm:py-4 border-b-2 border-blue-600 text-blue-600 font-medium flex items-center gap-1.5 sm:gap-2 relative whitespace-nowrap text-sm sm:text-base">
+<span class="material-icons text-xs sm:text-sm">inventory_2</span> Cargas
+      <button id="openModalBtn" class="bg-blue-600 text-white text-[10px] sm:text-xs font-bold w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full hover:bg-blue-700 transition-colors">+</button>
+</a>
+<a href="camiones.html" class="px-3 sm:px-4 py-3 sm:py-4 text-slate-500 font-medium hover:text-slate-700 flex items-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap text-sm sm:text-base">
+<span class="material-icons text-xs sm:text-sm">local_shipping</span> Camiones
+      <span class="bg-blue-100 text-blue-600 text-[10px] sm:text-xs font-bold w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full">+</span>
+</a>
+<a href="viajes.html" class="px-3 sm:px-4 py-3 sm:py-4 text-slate-500 font-medium hover:text-slate-700 flex items-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap text-sm sm:text-base">
+<span class="material-icons text-xs sm:text-sm">route</span> Viajes
+    </a>
+<a href="usuarios.html" class="px-3 sm:px-4 py-3 sm:py-4 text-slate-500 font-medium hover:text-slate-700 flex items-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap text-sm sm:text-base">
+<span class="material-icons text-xs sm:text-sm">group</span> Usuarios
+    </a>
+</nav>
+<!-- END: NavigationTabs -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 overflow-auto p-3 sm:p-6 flex justify-center" data-purpose="main-content-area">
+<div class="w-full max-w-5xl">
+<!-- BEGIN: SummaryCards -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6" data-purpose="summary-metrics">
+<!-- Total Card -->
+<div class="bg-white rounded-lg p-3 sm:p-5 shadow-sm border border-slate-200">
+<h3 class="text-[10px] sm:text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Total</h3>
+<p class="text-xl sm:text-3xl font-bold text-slate-900">1</p>
+</div>
+<!-- Disponibles Card -->
+<div class="bg-white rounded-lg p-3 sm:p-5 shadow-sm border border-slate-200">
+<h3 class="text-[10px] sm:text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Disponibles</h3>
+<p class="text-xl sm:text-3xl font-bold text-green-600">1</p>
+</div>
+<!-- Asignadas Card -->
+<div class="bg-white rounded-lg p-3 sm:p-5 shadow-sm border border-slate-200">
+<h3 class="text-[10px] sm:text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Asignadas</h3>
+<p class="text-xl sm:text-3xl font-bold text-blue-600">0</p>
+</div>
+<!-- Peso Libre Card -->
+<div class="bg-white rounded-lg p-3 sm:p-5 shadow-sm border border-slate-200">
+<h3 class="text-[10px] sm:text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Peso Libre</h3>
+<p class="text-xl sm:text-3xl font-bold text-slate-900">2.5 <span class="text-base sm:text-xl font-normal text-slate-500">t</span></p>
+</div>
+</section>
+<!-- END: SummaryCards -->
+<!-- BEGIN: Filters -->
+<section class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6" data-purpose="search-and-filters">
+<div class="relative w-full sm:w-48">
+<select class="w-full pl-3 pr-10 py-2.5 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none">
+<option>Todos los estados</option>
+<option>Disponible</option>
+<option>Asignada</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-icons text-sm">expand_more</span>
+</div>
+</div>
+<div class="relative flex-1">
+<input class="w-full pl-4 pr-10 py-2.5 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Buscar cliente, destino, guía..." type="text"/>
+</div>
+</section>
+<!-- END: Filters -->
+<!-- BEGIN: LoadList -->
+<section class="space-y-3 sm:space-y-4" data-purpose="load-items-list">
+<!-- Load Item Card -->
+<article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+<div class="p-4 sm:p-5">
+<!-- Header Row -->
+<div class="flex items-start justify-between mb-3 sm:mb-4">
+<div class="flex items-start gap-2 sm:gap-3">
+<span class="material-icons text-slate-400 mt-0.5 cursor-grab hidden sm:block">drag_indicator</span>
+<div>
+<div class="flex items-center gap-1.5 sm:gap-2 mb-1">
+<span class="material-icons text-slate-500 text-xs sm:text-sm">business</span>
+<h2 class="text-base sm:text-lg font-bold text-slate-900">Cliente test</h2>
+</div>
+<p class="text-xs sm:text-sm text-slate-500 ml-5 sm:ml-6">Maquinaria • Antofagasta</p>
+</div>
+</div>
+<span class="px-2 sm:px-3 py-1 bg-green-50 text-green-700 text-[10px] sm:text-xs font-semibold rounded-full border border-green-200">Disponible</span>
+</div>
+<!-- Tags Row -->
+<div class="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-5 pl-0 sm:pl-9">
+<span class="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-blue-50 text-blue-700 text-[10px] sm:text-xs font-medium rounded border border-blue-100">
+<span class="material-icons text-[12px] sm:text-[14px]">scale</span> 2.5 ton
+              </span>
+<span class="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-50 text-slate-700 text-[10px] sm:text-xs font-medium rounded border border-slate-200">
+<span class="material-icons text-[12px] sm:text-[14px]">location_on</span> Antofagasta
+              </span>
+<span class="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-50 text-slate-700 text-[10px] sm:text-xs font-medium rounded border border-slate-200">
+<span class="material-icons text-[12px] sm:text-[14px]">description</span> Guía 123
+              </span>
+<button class="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-blue-50 text-blue-600 text-[10px] sm:text-xs font-medium rounded border border-blue-100 hover:bg-blue-100 transition-colors">
+<span class="material-icons text-[12px] sm:text-[14px]">attach_file</span> 2 adjuntos
+              </button>
+</div>
+<!-- Financials Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-5 pl-0 sm:pl-9">
+<div class="bg-green-50/50 p-3 sm:p-4 rounded-lg border border-green-200">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="material-icons text-[12px] sm:text-[14px] text-green-600">sell</span>
+<span class="text-[10px] sm:text-xs font-semibold text-green-700 uppercase">Valor Carga</span>
+</div>
+<p class="text-lg sm:text-xl font-bold text-green-700">$1.500.000</p>
+</div>
+<div class="bg-blue-50/50 p-3 sm:p-4 rounded-lg border border-blue-200">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">local_shipping</span>
+<span class="text-[10px] sm:text-xs font-semibold text-blue-700 uppercase">Valor Flete</span>
+</div>
+<p class="text-lg sm:text-xl font-bold text-blue-700">$800.000</p>
+</div>
+</div>
+<!-- Image Thumbnail -->
+<div class="mb-3 sm:mb-5 pl-0 sm:pl-9">
+<img alt="Load thumbnail" class="w-12 h-12 sm:w-16 sm:h-16 rounded object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6JSFolq86QkXh9Nfo7RzbN3OBJH9x4dYfztQ6J0VupcWw7GyZFFUka1Y6OMLE2Zu6e8K5XHVNeUoPLyeqaBhf2YeoF70OtOMrecF4FkMX7rNmu3tBRuXsTN8EZhcC_FITQgMYzD6nLzeP7I3eDu5gpSgt49jly2o0qV4IOIY9Udjn-28z8FqgN5WyWNGrDZVLbyTqY_aq7onHfBMNFts6eBjJiaTfoLhDJzrpYBIT1GB_VFkqf576aw8kKeHq_0MsysjQHpIr5hjc"/>
+</div>
+<!-- Instructions -->
+<div class="bg-slate-50 p-2.5 sm:p-3 rounded-md mb-3 sm:mb-5 mx-0 sm:mx-9 text-xs sm:text-sm text-slate-600 border border-slate-100">
+              instrucciones
+            </div>
+<!-- Actions Row -->
+<div class="flex items-center gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-100 pl-0 sm:pl-9">
+<button class="open-editar-carga-modal-btn inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white text-slate-700 text-xs sm:text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50 transition-colors" data-cliente="Cliente test" data-tipo="Maquinaria" data-peso="2.5" data-destino="Antofagasta" data-valor-carga="1.500.000" data-valor-flete="800.000" data-descripcion="instrucciones" data-guias="123">
+<span class="material-icons text-[14px] sm:text-[16px]">edit</span> Editar
+              </button>
+<button class="open-eliminar-carga-modal-btn inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-red-50 text-red-600 text-xs sm:text-sm font-medium rounded-md border border-red-200 hover:bg-red-100 transition-colors" data-cliente="Cliente test">
+<span class="material-icons text-[14px] sm:text-[16px]">delete</span> Eliminar
+              </button>
+</div>
+</div>
+</article>
+</section>
+<!-- END: LoadList -->
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: Modal -->
+<div id="cargaModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+<div class="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+<div class="p-6">
+<!-- Modal Header -->
+<div class="flex items-center gap-2 mb-6">
+<span class="material-icons text-blue-600">add_circle</span>
+<h2 class="text-xl font-bold text-slate-900">Nueva carga</h2>
+</div>
+<!-- Form -->
+<form id="cargaForm" class="space-y-5">
+<!-- Row 1: Cliente y Tipo -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Cliente / Empresa</label>
+<input type="text" id="cliente" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Fregosi"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Tipo de carga</label>
+<input type="text" id="tipoCarga" list="tipoCargaOptions" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Escribe o elige el tipo..."/>
+<datalist id="tipoCargaOptions">
+<option value="Perfiles de acero">
+<option value="Misceláneos">
+<option value="Maquinaria">
+<option value="Insumos minería">
+</datalist>
+</div>
+</div>
+<!-- Row 2: Peso y Destino -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Peso (toneladas)</label>
+<input type="number" id="peso" step="0.1" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="0.0"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Destino</label>
+<input type="text" id="destino" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Antofagasta"/>
+</div>
+</div>
+<!-- Row 3: Valores -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Valor de la carga ($)</label>
+<input type="text" id="valorCarga" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: 1.500.000 o 500+200"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Valor del flete ($)</label>
+<input type="text" id="valorFlete" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: 800.000 o 300+500"/>
+</div>
+</div>
+<!-- Row 4: Descripción -->
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Descripción / Observaciones</label>
+<textarea id="descripcion" rows="3" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none" placeholder="Instrucciones especiales..."></textarea>
+</div>
+<!-- Row 5: Guías -->
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Números de guía</label>
+<div class="flex gap-2">
+<input type="text" id="guiaInput" class="flex-1 px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Número de guía"/>
+<button type="button" id="addGuiaBtn" class="px-4 py-2 bg-white border border-slate-300 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1">
+<span class="material-icons text-[16px]">add</span> Agregar
+                </button>
+</div>
+<div id="guiasList" class="flex flex-wrap gap-2 mt-2"></div>
+</div>
+<!-- Row 6: Adjuntos -->
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-2">Adjuntar guías y fotos</label>
+<div class="flex gap-3">
+<button type="button" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+<span class="material-icons text-[16px]">description</span> Adjuntar guía PDF / imagen
+                    </button>
+<button type="button" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+<span class="material-icons text-[16px]">camera_alt</span> Agregar fotos
+                    </button>
+</div>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="flex items-center justify-end gap-3 p-6 border-t border-slate-200 bg-slate-50 rounded-b-xl">
+<button type="button" id="closeModalBtn" class="px-5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2">
+<span class="material-icons text-[16px]">close</span> Cancelar
+            </button>
+<button type="submit" form="cargaForm" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-[16px]">save</span> Guardar carga
+            </button>
+</div>
+</div>
+</div>
+<!-- END: Modal -->
+<!-- BEGIN: Editar Carga Modal -->
+<div id="editarCargaModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+<div class="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+<div class="p-6">
+<!-- Modal Header -->
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<span class="material-icons text-blue-600">edit</span>
+<h2 class="text-xl font-bold text-slate-900">Editar carga</h2>
+</div>
+<button id="closeEditarCargaModal" class="text-slate-400 hover:text-slate-600 transition-colors p-1">
+<span class="material-icons">close</span>
+</button>
+</div>
+<!-- Form -->
+<form id="editarCargaForm" class="space-y-5">
+<input type="hidden" id="editarCargaId"/>
+<!-- Row 1: Cliente y Tipo -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Cliente / Empresa</label>
+<input type="text" id="editarCliente" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Fregosi"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Tipo de carga</label>
+<input type="text" id="editarTipoCarga" list="editarTipoCargaOptions" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Escribe o elige el tipo..."/>
+<datalist id="editarTipoCargaOptions">
+<option value="Perfiles de acero">
+<option value="Misceláneos">
+<option value="Maquinaria">
+<option value="Insumos minería">
+</datalist>
+</div>
+</div>
+<!-- Row 2: Peso y Destino -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Peso (toneladas)</label>
+<input type="number" id="editarPeso" step="0.1" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="0.0"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Destino</label>
+<input type="text" id="editarDestino" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Antofagasta"/>
+</div>
+</div>
+<!-- Row 3: Valores -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Valor de la carga ($)</label>
+<input type="text" id="editarValorCarga" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: 1.500.000 o 500+200"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Valor del flete ($)</label>
+<input type="text" id="editarValorFlete" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: 800.000 o 300+500"/>
+</div>
+</div>
+<!-- Row 4: Descripción -->
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Descripción / Observaciones</label>
+<textarea id="editarDescripcion" rows="3" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none" placeholder="Instrucciones especiales..."></textarea>
+</div>
+<!-- Row 5: Guías -->
+<div>
+<label class="block text-sm font-medium text-slate-700 mb-1">Números de guía</label>
+<div class="flex gap-2">
+<input type="text" id="editarGuiaInput" class="flex-1 px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Número de guía"/>
+<button type="button" id="editarAddGuiaBtn" class="px-4 py-2 bg-white border border-slate-300 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1">
+<span class="material-icons text-[16px]">add</span> Agregar
+                </button>
+</div>
+<div id="editarGuiasList" class="flex flex-wrap gap-2 mt-2"></div>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="flex items-center justify-end gap-3 p-6 border-t border-slate-200 bg-slate-50 rounded-b-xl">
+<button type="button" id="cancelarEditarCargaBtn" class="px-5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2">
+<span class="material-icons text-[16px]">close</span> Cancelar
+            </button>
+<button type="submit" form="editarCargaForm" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-[16px]">save</span> Guardar cambios
+            </button>
+</div>
+</div>
+</div>
+<!-- END: Editar Carga Modal -->
+<!-- BEGIN: Confirmar Eliminar Carga Modal -->
+<div id="eliminarCargaModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+<div class="bg-white rounded-xl shadow-xl w-full max-w-md">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+<span class="material-icons text-red-600">warning</span>
+</div>
+<div>
+<h2 class="text-lg font-bold text-slate-900">Eliminar carga</h2>
+<p class="text-sm text-slate-500">Esta acción no se puede deshacer.</p>
+</div>
+</div>
+<p class="text-sm text-slate-700 mb-1">¿Estás seguro que deseas eliminar la carga de <span id="eliminarCargaCliente" class="font-bold"></span>?</p>
+<p class="text-xs text-slate-500">Se eliminarán también las guías y archivos adjuntos.</p>
+</div>
+<div class="flex items-center justify-end gap-3 p-6 border-t border-slate-200 bg-slate-50 rounded-b-xl">
+<button type="button" id="cancelarEliminarCargaBtn" class="px-5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2">
+<span class="material-icons text-[16px]">close</span> Cancelar
+            </button>
+<button type="button" id="confirmarEliminarCargaBtn" class="px-5 py-2.5 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-[16px]">delete</span> Eliminar
+            </button>
+</div>
+</div>
+</div>
+<!-- END: Confirmar Eliminar Carga Modal -->
+<script>
+// Modal functionality
+const modal = document.getElementById('cargaModal');
+const openBtn = document.getElementById('openModalBtn');
+const closeBtn = document.getElementById('closeModalBtn');
+const guiaInput = document.getElementById('guiaInput');
+const addGuiaBtn = document.getElementById('addGuiaBtn');
+const guiasList = document.getElementById('guiasList');
+const cargaForm = document.getElementById('cargaForm');
+
+openBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+});
+
+closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+});
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+});
+
+// Add guia functionality
+addGuiaBtn.addEventListener('click', () => {
+    const value = guiaInput.value.trim();
+    if (value) {
+        const tag = document.createElement('span');
+        tag.className = 'inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-700 text-sm font-medium rounded border border-blue-200';
+        tag.innerHTML = `${value} <button type="button" class="ml-1 text-blue-500 hover:text-blue-700"><span class="material-icons text-[14px]">close</span></button>`;
+        tag.querySelector('button').addEventListener('click', () => tag.remove());
+        guiasList.appendChild(tag);
+        guiaInput.value = '';
+    }
+});
+
+guiaInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        addGuiaBtn.click();
+    }
+});
+
+// Form submit
+cargaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Collect form data
+    const guias = [];
+    guiasList.querySelectorAll('span').forEach(tag => {
+        const text = tag.textContent.replace('close', '').trim();
+        guias.push(text);
+    });
+    
+    const carga = {
+        id: Date.now(),
+        cliente: document.getElementById('cliente').value,
+        tipoCarga: document.getElementById('tipoCarga').value,
+        peso: document.getElementById('peso').value,
+        destino: document.getElementById('destino').value,
+        valorCarga: document.getElementById('valorCarga').value,
+        valorFlete: document.getElementById('valorFlete').value,
+        descripcion: document.getElementById('descripcion').value,
+        guias: guias,
+        estado: 'Disponible',
+        fecha: new Date().toISOString()
+    };
+    
+    // Get existing cargas or initialize empty array
+    let cargas = JSON.parse(localStorage.getItem('cargas')) || [];
+    cargas.push(carga);
+    localStorage.setItem('cargas', JSON.stringify(cargas));
+    
+    // Show success message
+    const successMsg = document.createElement('div');
+    successMsg.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 z-[100] animate-fade-in';
+    successMsg.innerHTML = '<span class="material-icons">check_circle</span> Carga guardada exitosamente';
+    document.body.appendChild(successMsg);
+    
+    setTimeout(() => {
+        successMsg.remove();
+    }, 3000);
+    
+    // Close modal and reset form
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    cargaForm.reset();
+    guiasList.innerHTML = '';
+});
+
+// Editar Carga Modal
+const editarCargaModal = document.getElementById('editarCargaModal');
+const closeEditarCargaModal = document.getElementById('closeEditarCargaModal');
+const cancelarEditarCargaBtn = document.getElementById('cancelarEditarCargaBtn');
+const editarCargaForm = document.getElementById('editarCargaForm');
+const editarGuiaInput = document.getElementById('editarGuiaInput');
+const editarAddGuiaBtn = document.getElementById('editarAddGuiaBtn');
+const editarGuiasList = document.getElementById('editarGuiasList');
+
+// Open edit modal
+document.querySelectorAll('.open-editar-carga-modal-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.getElementById('editarCliente').value = btn.dataset.cliente;
+        document.getElementById('editarTipoCarga').value = btn.dataset.tipo;
+        document.getElementById('editarPeso').value = btn.dataset.peso;
+        document.getElementById('editarDestino').value = btn.dataset.destino;
+        document.getElementById('editarValorCarga').value = btn.dataset.valorCarga;
+        document.getElementById('editarValorFlete').value = btn.dataset.valorFlete;
+        document.getElementById('editarDescripcion').value = btn.dataset.descripcion;
+        
+        // Load guias
+        editarGuiasList.innerHTML = '';
+        const guias = btn.dataset.guias.split(',');
+        guias.forEach(guia => {
+            if (guia.trim()) {
+                const tag = document.createElement('span');
+                tag.className = 'inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-700 text-sm font-medium rounded border border-blue-200';
+                tag.innerHTML = `${guia.trim()} <button type="button" class="ml-1 text-blue-500 hover:text-blue-700"><span class="material-icons text-[14px]">close</span></button>`;
+                tag.querySelector('button').addEventListener('click', () => tag.remove());
+                editarGuiasList.appendChild(tag);
+            }
+        });
+        
+        editarCargaModal.classList.remove('hidden');
+        editarCargaModal.classList.add('flex');
+    });
+});
+
+closeEditarCargaModal.addEventListener('click', () => {
+    editarCargaModal.classList.add('hidden');
+    editarCargaModal.classList.remove('flex');
+});
+
+cancelarEditarCargaBtn.addEventListener('click', () => {
+    editarCargaModal.classList.add('hidden');
+    editarCargaModal.classList.remove('flex');
+});
+
+editarCargaModal.addEventListener('click', (e) => {
+    if (e.target === editarCargaModal) {
+        editarCargaModal.classList.add('hidden');
+        editarCargaModal.classList.remove('flex');
+    }
+});
+
+// Add guia functionality for edit modal
+editarAddGuiaBtn.addEventListener('click', () => {
+    const value = editarGuiaInput.value.trim();
+    if (value) {
+        const tag = document.createElement('span');
+        tag.className = 'inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-700 text-sm font-medium rounded border border-blue-200';
+        tag.innerHTML = `${value} <button type="button" class="ml-1 text-blue-500 hover:text-blue-700"><span class="material-icons text-[14px]">close</span></button>`;
+        tag.querySelector('button').addEventListener('click', () => tag.remove());
+        editarGuiasList.appendChild(tag);
+        editarGuiaInput.value = '';
+    }
+});
+
+editarGuiaInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        editarAddGuiaBtn.click();
+    }
+});
+
+editarCargaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const successMsg = document.createElement('div');
+    successMsg.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 z-[100] animate-fade-in';
+    successMsg.innerHTML = '<span class="material-icons">check_circle</span> Carga actualizada exitosamente';
+    document.body.appendChild(successMsg);
+    
+    setTimeout(() => {
+        successMsg.remove();
+    }, 3000);
+    
+    editarCargaModal.classList.add('hidden');
+    editarCargaModal.classList.remove('flex');
+});
+
+// Eliminar Carga Modal
+const eliminarCargaModal = document.getElementById('eliminarCargaModal');
+const cancelarEliminarCargaBtn = document.getElementById('cancelarEliminarCargaBtn');
+const confirmarEliminarCargaBtn = document.getElementById('confirmarEliminarCargaBtn');
+const eliminarCargaCliente = document.getElementById('eliminarCargaCliente');
+
+let clienteAEliminar = null;
+
+document.querySelectorAll('.open-eliminar-carga-modal-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        clienteAEliminar = btn.dataset.cliente;
+        eliminarCargaCliente.textContent = clienteAEliminar;
+        eliminarCargaModal.classList.remove('hidden');
+        eliminarCargaModal.classList.add('flex');
+    });
+});
+
+cancelarEliminarCargaBtn.addEventListener('click', () => {
+    eliminarCargaModal.classList.add('hidden');
+    eliminarCargaModal.classList.remove('flex');
+    clienteAEliminar = null;
+});
+
+eliminarCargaModal.addEventListener('click', (e) => {
+    if (e.target === eliminarCargaModal) {
+        eliminarCargaModal.classList.add('hidden');
+        eliminarCargaModal.classList.remove('flex');
+        clienteAEliminar = null;
+    }
+});
+
+confirmarEliminarCargaBtn.addEventListener('click', () => {
+    if (clienteAEliminar) {
+        const successMsg = document.createElement('div');
+        successMsg.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 z-[100] animate-fade-in';
+        successMsg.innerHTML = '<span class="material-icons">check_circle</span> Carga de ' + clienteAEliminar + ' eliminada exitosamente';
+        document.body.appendChild(successMsg);
+        
+        setTimeout(() => {
+            successMsg.remove();
+        }, 3000);
+    }
+    
+    eliminarCargaModal.classList.add('hidden');
+    eliminarCargaModal.classList.remove('flex');
+    clienteAEliminar = null;
+});
+</script>
+</body></html>

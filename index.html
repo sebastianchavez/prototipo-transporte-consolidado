@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Transporte Consolidado</title>
+</head>
+<body>
+<script>
+    if (localStorage.getItem('isAuth') === 'true') {
+        window.location.href = 'cargas.html';
+    } else {
+        window.location.href = 'login.html';
+    }
+</script>
+</body>
+</html>
