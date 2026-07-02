@@ -21,6 +21,12 @@
     .progress-bar-fill-green {
       background-color: #10b981;
     }
+    @media (max-width: 639px) {
+      input, select, textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+    }
   </style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col overflow-x-hidden">
@@ -59,52 +65,54 @@
 </nav>
 <!-- END: NavigationTabs -->
 <!-- BEGIN: MainContent -->
-<main class="flex-1 overflow-auto p-6 flex justify-center" data-purpose="main-content">
-<div class="w-full max-w-5xl space-y-6">
+<main class="flex-1 overflow-auto p-3 sm:p-6 flex justify-center" data-purpose="main-content">
+<div class="w-full max-w-5xl space-y-4 sm:space-y-6">
 <!-- BEGIN: PageHeader & Actions -->
-<div class="flex items-center justify-between mb-6" data-purpose="page-header">
-<div class="flex items-center gap-3">
-<div class="p-2 bg-blue-50 rounded text-blue-600">
-<span class="material-icons text-xl">route</span>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6" data-purpose="page-header">
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="p-1.5 sm:p-2 bg-blue-50 rounded text-blue-600">
+<span class="material-icons text-lg sm:text-xl">route</span>
 </div>
-<h2 class="text-2xl font-bold text-slate-900">Viajes</h2>
+<h2 class="text-xl sm:text-2xl font-bold text-slate-900">Viajes</h2>
 </div>
-<div class="flex items-center gap-3">
-<div class="flex items-center bg-white border border-slate-300 rounded shadow-sm px-3 py-1.5 text-sm text-slate-600">
-<span class="material-icons text-[16px] text-slate-400 mr-2">calendar_today</span>
-<span class="mx-1">dd-mm-aaaa</span>
-<span class="material-icons text-[14px] text-slate-400 mx-1">calculate</span>
-<span class="mx-2 text-slate-400">al</span>
-<span class="mx-1">dd-mm-aaaa</span>
-<span class="material-icons text-[16px] text-slate-400 ml-2">calendar_today</span>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+<div class="flex items-center bg-white border border-slate-300 rounded shadow-sm px-2 sm:px-3 py-1.5 text-xs sm:text-sm text-slate-600">
+<span class="material-icons text-[14px] sm:text-[16px] text-slate-400 mr-1 sm:mr-2">calendar_today</span>
+<span class="mx-0.5 sm:mx-1">dd-mm-aaaa</span>
+<span class="material-icons text-[12px] sm:text-[14px] text-slate-400 mx-0.5 sm:mx-1">calculate</span>
+<span class="mx-1 sm:mx-2 text-slate-400">al</span>
+<span class="mx-0.5 sm:mx-1">dd-mm-aaaa</span>
+<span class="material-icons text-[14px] sm:text-[16px] text-slate-400 ml-1 sm:ml-2">calendar_today</span>
 </div>
+<div class="flex gap-2">
 <button class="bg-white border border-slate-300 rounded shadow-sm p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-50">
-<span class="material-icons text-[18px]">close</span>
+<span class="material-icons text-[16px] sm:text-[18px]">close</span>
 </button>
-<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium flex items-center gap-2 transition-colors">
-<span class="material-icons text-[16px]">file_upload</span> Exportar viajes
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded shadow-sm text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 transition-colors flex-1 sm:flex-none justify-center">
+<span class="material-icons text-[14px] sm:text-[16px]">file_upload</span> <span class="hidden sm:inline">Exportar viajes</span><span class="sm:hidden">Exportar</span>
           </button>
+</div>
 </div>
 </div>
 <!-- END: PageHeader & Actions -->
 <!-- BEGIN: TripCardsList -->
-<div class="space-y-6" data-purpose="trip-list">
+<div class="space-y-4 sm:space-y-6" data-purpose="trip-list">
 <!-- BEGIN: TripCard 1 -->
-<article class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-4" data-purpose="trip-card">
+<article class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5 space-y-3 sm:space-y-4" data-purpose="trip-card">
 <!-- Card Header -->
-<div class="flex items-start justify-between">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-3">
 <div>
-<h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-<span class="material-icons text-slate-400 text-sm">local_shipping</span> CD5678 — María López
+<h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2">
+<span class="material-icons text-slate-400 text-xs sm:text-sm">local_shipping</span> CD5678 — María López
               </h3>
-<p class="text-sm text-slate-500 mt-1">Destinos: Valparaíso, Calama</p>
+<p class="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1">Destinos: Valparaíso, Calama</p>
 </div>
-<div class="flex items-center gap-3">
-<span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full border border-green-200">Disponible</span>
-<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded px-2 py-1 text-sm text-slate-600">
-<span class="material-icons text-[14px] text-blue-600">calendar_today</span> 05-07-2026
+<div class="flex flex-wrap items-center gap-2 sm:gap-3">
+<span class="px-2 sm:px-3 py-1 bg-green-50 text-green-700 text-[10px] sm:text-xs font-semibold rounded-full border border-green-200">Disponible</span>
+<div class="flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs sm:text-sm text-slate-600">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">calendar_today</span> 05-07-2026
 </div>
-<select class="border border-slate-300 rounded px-3 py-1.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+<select class="border border-slate-300 rounded px-2 sm:px-3 py-1.5 text-xs sm:text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
 <option>Disponible</option>
 <option>En ruta</option>
 <option>Completado</option>
@@ -113,77 +121,77 @@
 </div>
 <!-- Progress Bar -->
 <div data-purpose="trip-progress">
-<div class="flex justify-between text-xs text-slate-500 mb-1">
+<div class="flex justify-between text-[10px] sm:text-xs text-slate-500 mb-1">
 <span>21.2 / 28 ton · 2 cargas</span>
 <span class="font-medium text-slate-700">76%</span>
 </div>
-<div class="h-2 w-full progress-bar-bg rounded-full overflow-hidden">
+<div class="h-1.5 sm:h-2 w-full progress-bar-bg rounded-full overflow-hidden">
 <div class="h-full progress-bar-fill-orange" style="width: 76%;"></div>
 </div>
 </div>
 <!-- Financial Summary -->
-<div class="grid grid-cols-2 gap-4" data-purpose="trip-financials">
-<div class="bg-green-50/50 border border-green-200 rounded-lg p-3">
-<div class="flex items-center gap-1 text-xs font-medium text-green-700 mb-1 uppercase">
-<span class="material-icons text-[14px]">sell</span> Total Carga
+<div class="grid grid-cols-2 gap-2 sm:gap-4" data-purpose="trip-financials">
+<div class="bg-green-50/50 border border-green-200 rounded-lg p-2.5 sm:p-3">
+<div class="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-green-700 mb-0.5 sm:mb-1 uppercase">
+<span class="material-icons text-[12px] sm:text-[14px]">sell</span> Total Carga
               </div>
-<div class="text-xl font-bold text-green-700">$2.660.000</div>
+<div class="text-base sm:text-xl font-bold text-green-700">$2.660.000</div>
 </div>
-<div class="bg-blue-50/50 border border-blue-200 rounded-lg p-3">
-<div class="flex items-center gap-1 text-xs font-medium text-blue-700 mb-1 uppercase">
-<span class="material-icons text-[14px]">local_shipping</span> Total Flete
+<div class="bg-blue-50/50 border border-blue-200 rounded-lg p-2.5 sm:p-3">
+<div class="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-blue-700 mb-0.5 sm:mb-1 uppercase">
+<span class="material-icons text-[12px] sm:text-[14px]">local_shipping</span> Total Flete
               </div>
-<div class="text-xl font-bold text-blue-700">$830.000</div>
+<div class="text-base sm:text-xl font-bold text-blue-700">$830.000</div>
 </div>
 </div>
 <!-- Load Items List -->
-<div class="space-y-2 mt-4" data-purpose="trip-loads">
+<div class="space-y-1.5 sm:space-y-2 mt-3 sm:mt-4" data-purpose="trip-loads">
 <!-- Load Item 1 -->
-<div class="bg-slate-50 rounded border border-slate-100 p-3 flex items-center justify-between">
-<div class="flex items-start gap-3">
-<span class="material-icons text-blue-600 mt-1">inventory_2</span>
+<div class="bg-slate-50 rounded border border-slate-100 p-2.5 sm:p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
+<div class="flex items-start gap-2 sm:gap-3">
+<span class="material-icons text-blue-600 mt-0.5 sm:mt-1 text-sm sm:text-base">inventory_2</span>
 <div>
-<div class="font-medium text-slate-900 text-sm">AgroExport SpA</div>
-<div class="text-xs text-slate-500">Cajas · 6.2t · Valparaíso</div>
-<div class="flex gap-2 mt-1.5">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700 border border-green-100">
-<span class="material-icons text-[10px]">sell</span> $560.000
+<div class="font-medium text-slate-900 text-xs sm:text-sm">AgroExport SpA</div>
+<div class="text-[10px] sm:text-xs text-slate-500">Cajas · 6.2t · Valparaíso</div>
+<div class="flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-1.5">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+<span class="material-icons text-[8px] sm:text-[10px]">sell</span> $560.000
                     </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
-<span class="material-icons text-[10px]">local_shipping</span> $180.000
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+<span class="material-icons text-[8px] sm:text-[10px]">local_shipping</span> $180.000
                     </span>
 </div>
 </div>
 </div>
-<div class="flex gap-2">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
-<span class="material-icons text-[14px] text-blue-600">description</span> G-004
+<div class="flex gap-1.5 sm:gap-2 pl-6 sm:pl-0">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">description</span> G-004
                 </span>
 </div>
 </div>
 <!-- Load Item 2 -->
-<div class="bg-slate-50 rounded border border-slate-100 p-3 flex items-center justify-between">
-<div class="flex items-start gap-3">
-<span class="material-icons text-blue-600 mt-1">inventory_2</span>
+<div class="bg-slate-50 rounded border border-slate-100 p-2.5 sm:p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
+<div class="flex items-start gap-2 sm:gap-3">
+<span class="material-icons text-blue-600 mt-0.5 sm:mt-1 text-sm sm:text-base">inventory_2</span>
 <div>
-<div class="font-medium text-slate-900 text-sm">Minera Andina</div>
-<div class="text-xs text-slate-500">Bultos · 15.0t · Calama</div>
-<div class="flex gap-2 mt-1.5">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700 border border-green-100">
-<span class="material-icons text-[10px]">sell</span> $2.100.000
+<div class="font-medium text-slate-900 text-xs sm:text-sm">Minera Andina</div>
+<div class="text-[10px] sm:text-xs text-slate-500">Bultos · 15.0t · Calama</div>
+<div class="flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-1.5">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+<span class="material-icons text-[8px] sm:text-[10px]">sell</span> $2.100.000
                     </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
-<span class="material-icons text-[10px]">local_shipping</span> $650.000
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+<span class="material-icons text-[8px] sm:text-[10px]">local_shipping</span> $650.000
                     </span>
 </div>
 </div>
 </div>
-<div class="flex gap-2">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
-<span class="material-icons text-[14px] text-blue-600">description</span> G-005
+<div class="flex flex-wrap gap-1.5 sm:gap-2 pl-6 sm:pl-0">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">description</span> G-005
                 </span>
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
-<span class="material-icons text-[14px] text-blue-600">description</span> G-006
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">description</span> G-006
                 </span>
 </div>
 </div>
@@ -191,21 +199,21 @@
 </article>
 <!-- END: TripCard 1 -->
 <!-- BEGIN: TripCard 2 -->
-<article class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-4" data-purpose="trip-card">
+<article class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5 space-y-3 sm:space-y-4" data-purpose="trip-card">
 <!-- Card Header -->
-<div class="flex items-start justify-between">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-3">
 <div>
-<h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-<span class="material-icons text-slate-400 text-sm">local_shipping</span> AB1234 — Juan Pérez
+<h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2">
+<span class="material-icons text-slate-400 text-xs sm:text-sm">local_shipping</span> AB1234 — Juan Pérez
               </h3>
-<p class="text-sm text-slate-500 mt-1">Destinos: Santiago, Antofagasta</p>
+<p class="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1">Destinos: Santiago, Antofagasta</p>
 </div>
-<div class="flex items-center gap-3">
-<span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-200">En ruta</span>
-<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded px-2 py-1 text-sm text-slate-600">
-<span class="material-icons text-[14px] text-blue-600">calendar_today</span> 01-07-2026
+<div class="flex flex-wrap items-center gap-2 sm:gap-3">
+<span class="px-2 sm:px-3 py-1 bg-blue-50 text-blue-700 text-[10px] sm:text-xs font-semibold rounded-full border border-blue-200">En ruta</span>
+<div class="flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs sm:text-sm text-slate-600">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">calendar_today</span> 01-07-2026
 </div>
-<select class="border border-slate-300 rounded px-3 py-1.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+<select class="border border-slate-300 rounded px-2 sm:px-3 py-1.5 text-xs sm:text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
 <option>En ruta</option>
 <option>Disponible</option>
 <option>Completado</option>
@@ -214,69 +222,69 @@
 </div>
 <!-- Progress Bar -->
 <div data-purpose="trip-progress">
-<div class="flex justify-between text-xs text-slate-500 mb-1">
+<div class="flex justify-between text-[10px] sm:text-xs text-slate-500 mb-1">
 <span>20.5 / 28 ton · 2 cargas</span>
 <span class="font-medium text-slate-700">73%</span>
 </div>
-<div class="h-2 w-full progress-bar-bg rounded-full overflow-hidden">
+<div class="h-1.5 sm:h-2 w-full progress-bar-bg rounded-full overflow-hidden">
 <div class="h-full progress-bar-fill-green" style="width: 73%;"></div>
 </div>
 </div>
 <!-- Financial Summary -->
-<div class="grid grid-cols-2 gap-4" data-purpose="trip-financials">
-<div class="bg-green-50/50 border border-green-200 rounded-lg p-3">
-<div class="flex items-center gap-1 text-xs font-medium text-green-700 mb-1 uppercase">
-<span class="material-icons text-[14px]">sell</span> Total Carga
+<div class="grid grid-cols-2 gap-2 sm:gap-4" data-purpose="trip-financials">
+<div class="bg-green-50/50 border border-green-200 rounded-lg p-2.5 sm:p-3">
+<div class="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-green-700 mb-0.5 sm:mb-1 uppercase">
+<span class="material-icons text-[12px] sm:text-[14px]">sell</span> Total Carga
               </div>
-<div class="text-xl font-bold text-green-700">$2.140.000</div>
+<div class="text-base sm:text-xl font-bold text-green-700">$2.140.000</div>
 </div>
-<div class="bg-blue-50/50 border border-blue-200 rounded-lg p-3">
-<div class="flex items-center gap-1 text-xs font-medium text-blue-700 mb-1 uppercase">
-<span class="material-icons text-[14px]">local_shipping</span> Total Flete
+<div class="bg-blue-50/50 border border-blue-200 rounded-lg p-2.5 sm:p-3">
+<div class="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-blue-700 mb-0.5 sm:mb-1 uppercase">
+<span class="material-icons text-[12px] sm:text-[14px]">local_shipping</span> Total Flete
               </div>
-<div class="text-xl font-bold text-blue-700">$770.000</div>
+<div class="text-base sm:text-xl font-bold text-blue-700">$770.000</div>
 </div>
 </div>
 <!-- Load Items List -->
-<div class="space-y-2 mt-4" data-purpose="trip-loads">
+<div class="space-y-1.5 sm:space-y-2 mt-3 sm:mt-4" data-purpose="trip-loads">
 <!-- Load Item 1 -->
-<div class="bg-slate-50 rounded border border-slate-100 p-3 flex items-center justify-between">
-<div class="flex items-start gap-3">
-<span class="material-icons text-blue-600 mt-1">inventory_2</span>
+<div class="bg-slate-50 rounded border border-slate-100 p-2.5 sm:p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
+<div class="flex items-start gap-2 sm:gap-3">
+<span class="material-icons text-blue-600 mt-0.5 sm:mt-1 text-sm sm:text-base">inventory_2</span>
 <div>
-<div class="font-medium text-slate-900 text-sm">Importadora Sur</div>
-<div class="text-xs text-slate-500">Pallets · 8.5t · Santiago</div>
-<div class="flex gap-2 mt-1.5">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700 border border-green-100">
-<span class="material-icons text-[10px]">sell</span> $1.250.000
+<div class="font-medium text-slate-900 text-xs sm:text-sm">Importadora Sur</div>
+<div class="text-[10px] sm:text-xs text-slate-500">Pallets · 8.5t · Santiago</div>
+<div class="flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-1.5">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+<span class="material-icons text-[8px] sm:text-[10px]">sell</span> $1.250.000
                     </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
-<span class="material-icons text-[10px]">local_shipping</span> $350.000
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+<span class="material-icons text-[8px] sm:text-[10px]">local_shipping</span> $350.000
                     </span>
 </div>
 </div>
 </div>
-<div class="flex gap-2">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
-<span class="material-icons text-[14px] text-blue-600">description</span> G-001
+<div class="flex flex-wrap gap-1.5 sm:gap-2 pl-6 sm:pl-0">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">description</span> G-001
                 </span>
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
-<span class="material-icons text-[14px] text-blue-600">description</span> G-002
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">description</span> G-002
                 </span>
 </div>
 </div>
 <!-- Load Item 2 -->
-<div class="bg-slate-50 rounded border border-slate-100 p-3 flex items-center justify-between">
-<div class="flex items-start gap-3">
-<span class="material-icons text-blue-600 mt-1">inventory_2</span>
+<div class="bg-slate-50 rounded border border-slate-100 p-2.5 sm:p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
+<div class="flex items-start gap-2 sm:gap-3">
+<span class="material-icons text-blue-600 mt-0.5 sm:mt-1 text-sm sm:text-base">inventory_2</span>
 <div>
-<div class="font-medium text-slate-900 text-sm">Distribuidora Norte</div>
-<div class="text-xs text-slate-500">Fardos · 12.0t · Antofagasta</div>
+<div class="font-medium text-slate-900 text-xs sm:text-sm">Distribuidora Norte</div>
+<div class="text-[10px] sm:text-xs text-slate-500">Fardos · 12.0t · Antofagasta</div>
 </div>
 </div>
-<div class="flex gap-2">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
-<span class="material-icons text-[14px] text-blue-600">description</span> G-003
+<div class="flex gap-1.5 sm:gap-2 pl-6 sm:pl-0">
+<span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-sm">
+<span class="material-icons text-[12px] sm:text-[14px] text-blue-600">description</span> G-003
                 </span>
 </div>
 </div>
