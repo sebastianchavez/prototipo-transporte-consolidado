@@ -76,16 +76,22 @@
 <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Viajes</h2>
 </div>
 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-<div class="flex items-center bg-white border border-slate-300 rounded shadow-sm px-2 sm:px-3 py-1.5 text-xs sm:text-sm text-slate-600">
-<span class="material-icons text-[14px] sm:text-[16px] text-slate-400 mr-1 sm:mr-2">calendar_today</span>
-<span class="mx-0.5 sm:mx-1">dd-mm-aaaa</span>
-<span class="material-icons text-[12px] sm:text-[14px] text-slate-400 mx-0.5 sm:mx-1">calculate</span>
-<span class="mx-1 sm:mx-2 text-slate-400">al</span>
-<span class="mx-0.5 sm:mx-1">dd-mm-aaaa</span>
-<span class="material-icons text-[14px] sm:text-[16px] text-slate-400 ml-1 sm:ml-2">calendar_today</span>
+<div class="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3">
+<div class="flex flex-col w-full sm:w-auto">
+<label class="text-[10px] sm:text-xs font-medium text-slate-500 mb-1">Desde</label>
+<div class="bg-white border border-slate-300 rounded shadow-sm w-full">
+<input type="date" id="fechaDesde" class="border-0 text-xs sm:text-sm text-slate-700 focus:outline-none focus:ring-0 bg-transparent px-2 py-2 w-full"/>
+</div>
+</div>
+<div class="flex flex-col w-full sm:w-auto">
+<label class="text-[10px] sm:text-xs font-medium text-slate-500 mb-1">Hasta</label>
+<div class="bg-white border border-slate-300 rounded shadow-sm w-full">
+<input type="date" id="fechaHasta" class="border-0 text-xs sm:text-sm text-slate-700 focus:outline-none focus:ring-0 bg-transparent px-2 py-2 w-full"/>
+</div>
+</div>
 </div>
 <div class="flex gap-2">
-<button class="bg-white border border-slate-300 rounded shadow-sm p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-50">
+<button id="limpiarFechasBtn" class="bg-white border border-slate-300 rounded shadow-sm p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-50">
 <span class="material-icons text-[16px] sm:text-[18px]">close</span>
 </button>
 <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded shadow-sm text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 transition-colors flex-1 sm:flex-none justify-center">
@@ -296,4 +302,73 @@
 </div>
 </main>
 <!-- END: MainContent -->
+<script>
+// Date filter functionality
+const fechaDesde = document.getElementById('fechaDesde');
+const fechaHasta = document.getElementById('fechaHasta');
+const limpiarFechasBtn = document.getElementById('limpiarFechasBtn');
+const tripCards = document.querySelectorAll('[data-purpose="trip-card"]');
+
+// Set default dates (empty)
+fechaDesde.value = '';
+fechaHasta.value = '';
+
+// Filter trips by date range
+function filtrarViajes() {
+    const desde = fechaDesde.value;
+    const hasta = fechaHasta.value;
+    
+    tripCards.forEach(card => {
+        const dateElement = card.querySelector('.bg-slate-50.border.border-slate-200');
+        if (!dateElement) return;
+        
+        const dateText = dateElement.textContent.trim();
+        // Extract date from format "calendar_today DD-MM-YYYY"
+        const dateMatch = dateText.match(/(\d{2})-(\d{2})-(\d{4})/);
+        if (!dateMatch) return;
+        
+        const tripDate = new Date(dateMatch[3], dateMatch[2] - 1, dateMatch[1]);
+        const tripDateStr = tripDate.toISOString().split('T')[0];
+        
+        let mostrar = true;
+        
+        if (desde && tripDateStr < desde) {
+            mostrar = false;
+        }
+        if (hasta && tripDateStr > hasta) {
+            mostrar = false;
+        }
+        
+        card.style.display = mostrar ? '' : 'none';
+    });
+    
+    // Show message if no trips visible
+    const visibleTrips = document.querySelectorAll('[data-purpose="trip-card"]:not([style*="display: none"])');
+    let noResultsMsg = document.getElementById('noResultsMsg');
+    
+    if (visibleTrips.length === 0) {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'noResultsMsg';
+            noResultsMsg.className = 'bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center';
+            noResultsMsg.innerHTML = '<span class="material-icons text-slate-400 text-4xl mb-2">search_off</span><p class="text-slate-500">No se encontraron viajes en el rango de fechas seleccionado.</p>';
+            document.querySelector('[data-purpose="trip-list"]').appendChild(noResultsMsg);
+        }
+        noResultsMsg.style.display = '';
+    } else if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+}
+
+// Clear filters
+limpiarFechasBtn.addEventListener('click', () => {
+    fechaDesde.value = '';
+    fechaHasta.value = '';
+    filtrarViajes();
+});
+
+// Filter on date change
+fechaDesde.addEventListener('change', filtrarViajes);
+fechaHasta.addEventListener('change', filtrarViajes);
+</script>
 </body></html>
